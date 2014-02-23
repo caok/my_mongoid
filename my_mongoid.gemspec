@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = MyMongoid::VERSION
   spec.authors       = ["caok"]
   spec.email         = ["caok1231@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{my mongodb ruby wrapper}
+  spec.summary       = %q{mongodb wrapper}
   spec.homepage      = ""
   spec.license       = "MIT"
 
