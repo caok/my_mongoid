@@ -1,3 +1,5 @@
+require 'pry'
+
 module MyMongoid
   module Document
 
@@ -18,7 +20,7 @@ module MyMongoid
         raise DuplicateFieldError if fields.key?(field_name.to_s)
 
         define_method(field_name.to_s) do
-           self.read_attribute field_name.to_s
+          self.read_attribute field_name.to_s
         end
 
         define_method("#{field_name}=") do |value|
@@ -40,7 +42,8 @@ module MyMongoid
 
     def initialize attrs = {}
       raise ArgumentError, "Only accept hash as argument" unless attrs.is_a? Hash
-      @attributes = attrs
+      process_attributes(attrs)
+      #@attributes = attrs
     end
 
     def attributes
@@ -58,5 +61,15 @@ module MyMongoid
     def new_record?
       true
     end
+
+    def process_attributes(attrs = nil)
+      attrs ||= {}
+      attrs.each_pair do |key, value|
+        #raise MyMongoid::UnknownAttributeError unless self.class.respond_to?("#{key}=")
+        raise MyMongoid::UnknownAttributeError unless self.class.fields.keys.include? key.to_s
+        self.send(key.to_s + '=', value) unless key == 'id'
+      end
+    end
+    alias :attributes= :process_attributes
   end
 end
