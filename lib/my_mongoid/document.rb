@@ -12,5 +12,26 @@ module MyMongoid
         true
       end
     end
+
+    def initialize attrs = {}
+      raise ArgumentError, "Only accept hash as argument" unless attrs.is_a? Hash
+      @attributes = attrs
+    end
+
+    def attributes
+      @attributes ||= {}
+    end
+
+    def read_attribute(name)
+      @attributes[name]
+    end
+
+    def write_attribute(name, value)
+      @attributes[name] = value
+    end
+
+    def new_record?
+      true
+    end
   end
 end
