@@ -5,8 +5,9 @@ module MyMongoid
 
     def self.included(base)
       base.extend ClassMethods
-      base.field :_id
-      base.alias_field :id, :_id
+      #base.field :_id
+      #base.alias_field :id, :_id
+      base.send :field, "_id", as: "id"
 
       MyMongoid.register_model base
     end
@@ -16,7 +17,7 @@ module MyMongoid
         true
       end
 
-      def field(field_name)
+      def field(field_name, options={})
         raise DuplicateFieldError if fields.key?(field_name.to_s)
 
         define_method(field_name.to_s) do
@@ -27,7 +28,13 @@ module MyMongoid
           self.write_attribute field_name.to_s, value
         end
 
-        fields[field_name.to_s] = MyMongoid::Field.new(field_name.to_s)
+        fields[field_name.to_s] = MyMongoid::Field.new(field_name.to_s, options)
+
+        field_alias = options.fetch(:as, nil).to_s.strip
+        unless field_alias.empty?
+          alias_method field_alias, field_name.to_s
+          alias_method "#{field_alias}=", field_name.to_s + "="
+        end
       end
 
       def fields
@@ -42,6 +49,7 @@ module MyMongoid
 
     def initialize attrs = {}
       raise ArgumentError, "Only accept hash as argument" unless attrs.is_a? Hash
+      @attributes ||= {}
       process_attributes(attrs)
       #@attributes = attrs
     end
