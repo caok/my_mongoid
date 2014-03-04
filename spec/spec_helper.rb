@@ -1,4 +1,6 @@
 require "my_mongoid"
+require 'coveralls'
+Coveralls.wear!
 
 RSpec.configure do |config|
   $LOAD_PATH.unshift(File.dirname(__FILE__))
