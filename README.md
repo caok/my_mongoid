@@ -1,4 +1,4 @@
-# MyMongoid  [![Build Status](https://travis-ci.org/caok/my_mongoid.png?branch=master)](https://travis-ci.org/caok/my_mongoid)
+# MyMongoid  [![Build Status](https://travis-ci.org/caok/my_mongoid.png?branch=master)](https://travis-ci.org/caok/my_mongoid)  [![Coverage Status](https://coveralls.io/repos/caok/my_mongoid/badge.png)](https://coveralls.io/r/caok/my_mongoid)
 
 TODO: Write a gem description
 
