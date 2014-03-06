@@ -75,6 +75,10 @@ module MyMongoid
       @attributes[name] = value
     end
 
+    def to_document
+      @attributes
+    end
+
     def new_record?
       true
     end
