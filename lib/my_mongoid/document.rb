@@ -1,4 +1,5 @@
 require 'pry'
+require "active_support/inflector"
 
 module MyMongoid
   module Document
@@ -44,6 +45,14 @@ module MyMongoid
       def alias_field(as, field)
         alias_method(as, field)
         alias_method("#{as}=", "#{field}=")
+      end
+
+      def collection_name
+        self.name.tableize
+      end
+
+      def collection
+        MyMongoid.session[collection_name]
       end
     end
 
